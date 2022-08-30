@@ -6,8 +6,8 @@ namespace WEBAPI.Aula01.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Consumes("application/json")] // Determina o que será consumido
-    [Produces("application/json")] // Determina o que será devolvido
+    [Consumes("application/json")]
+    [Produces("application/json")]
     public class CadastroController : ControllerBase
     {
         private static readonly string[] Nomes = new[]
@@ -30,7 +30,7 @@ namespace WEBAPI.Aula01.Controllers
         }
 
         // GET api/<CadastroController>
-        [HttpGet("/cliente/consulta")] // Especifica a rota
+        [HttpGet("/cliente/consulta")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<Cadastro>> VerTudo()
         {
@@ -38,7 +38,7 @@ namespace WEBAPI.Aula01.Controllers
         }
 
         // GET api/<CadastroController>
-        [HttpGet("/cliente/{cpf}/consulta")] // Especifica a rota. O parametro vira path
+        [HttpGet("/cliente/{cpf}/consulta")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Cadastro> Consulta(string cpf)
@@ -52,7 +52,7 @@ namespace WEBAPI.Aula01.Controllers
         }
 
         //POST api/<CadastroController>
-        [HttpPost("/cliente/inserção")] // Sem o path determinado, o parametro é query
+        [HttpPost("/cliente/inserção")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Cadastro> Inserir(Cadastro clienteNovo)
