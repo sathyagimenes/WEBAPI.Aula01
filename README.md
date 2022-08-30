@@ -1,9 +1,10 @@
 # WEBAPI.Aula01
 
-Este repositório contém minha solução para os exercícios propostos na aula 01 do módulo Web API. Estes exercícios foram propostos para a fixação do conteúdo de API Controller. <br/>
+Este repositório contém minha solução para os exercícios propostos nas aulas 01 e 02 do módulo Web API. Estes exercícios foram propostos para a fixação do conteúdo de API Controller. <br/>
 
 ### Enunciado <br/>
-Construa um cadastro completo (CRUD) de clientes. Neste cadastro, o cliente deve possuir cpf, nome, data de nascimento e idade.
+- Construa um cadastro completo (CRUD) de clientes. Neste cadastro, o cliente deve possuir cpf, nome, data de nascimento e idade.
+- Implemente na API existente de cliente toda a documentação da API utilizando os decorators visto em sala. Adicione também statuscode de retorno específicos para cada método. Realize uma validação básica nos dados recebidos do Cliente.
 <br/>
 <br/>
 
