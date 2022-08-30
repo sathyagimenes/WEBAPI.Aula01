@@ -29,7 +29,7 @@ namespace WEBAPI.Aula01.Controllers
             .ToList();
         }
 
-        // GET api/<CadastroController>
+        // GET
         [HttpGet("/cliente/consulta")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<Cadastro>> VerTudo()
@@ -37,7 +37,7 @@ namespace WEBAPI.Aula01.Controllers
             return Ok(cadastrosCliente);
         }
 
-        // GET api/<CadastroController>
+        // GET
         [HttpGet("/cliente/{cpf}/consulta")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -51,7 +51,7 @@ namespace WEBAPI.Aula01.Controllers
             return Ok(cadastro);
         }
 
-        //POST api/<CadastroController>
+        // POST
         [HttpPost("/cliente/inserção")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -61,7 +61,7 @@ namespace WEBAPI.Aula01.Controllers
             return CreatedAtAction(nameof(Inserir), clienteNovo);
         }
 
-        // PUT api/<CadastroController>
+        // PUT
         [HttpPut("/cliente/{cpf}/atualização")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -79,7 +79,7 @@ namespace WEBAPI.Aula01.Controllers
             return Ok(cadastrosCliente.Find(cadastrosCliente => cadastrosCliente.Cpf == novoCadastro.Cpf));
         }
 
-        // DELETE api/<CadastroController>
+        // DELETE
         [HttpDelete("/cliente/{cpf}/remoção")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
