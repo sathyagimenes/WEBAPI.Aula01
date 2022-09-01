@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using WEBAPI.Aula01.Repository;
 
 
 namespace WEBAPI.Aula01.Controllers
@@ -10,40 +11,48 @@ namespace WEBAPI.Aula01.Controllers
     [Produces("application/json")]
     public class CadastroController : ControllerBase
     {
-        private static readonly string[] Nomes = new[]
-        {
-            "Harry Potter", "Hermione Granger", "Ronald Weasley", "Luna Lovegood", "Neville Longbottom"
-        };
-        private readonly ILogger<CadastroController> _logger;
+        //private static readonly string[] Nomes = new[]
+        //{
+        //    "Harry Potter", "Hermione Granger", "Ronald Weasley", "Luna Lovegood", "Neville Longbottom"
+        //};
+        //private readonly ILogger<CadastroController> _logger;
         public List<Cadastro> cadastrosCliente { get; set; }
+        public CadastroRepository _repositoryCadastro;
 
-        public CadastroController(ILogger<CadastroController> logger)
+        public CadastroController(IConfiguration configuration)
         {
-            _logger = logger;
-            cadastrosCliente = Enumerable.Range(0, 5).Select(num => new Cadastro
-            {
-                DataNascimento = new DateTime((1960 + num), 01, 05),
-                Nome = Nomes[num],
-                Cpf = Convert.ToString(12345678900 + num)
-            })
-            .ToList();
+            cadastrosCliente = new List<Cadastro>();
+            _repositoryCadastro = new CadastroRepository(configuration);
         }
+
+        //public CadastroController(ILogger<CadastroController> logger)
+        //{
+        //    _logger = logger;
+        //    cadastrosCliente = Enumerable.Range(0, 5).Select(num => new Cadastro
+        //    {
+        //        DataNascimento = new DateTime((1960 + num), 01, 05),
+        //        Nome = Nomes[num],
+        //        Cpf = Convert.ToString(12345678900 + num)
+        //    })
+        //    .ToList();
+        //}
 
         // GET
         [HttpGet("/cliente/consulta")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<List<Cadastro>> VerTudo()
+        public ActionResult<List<Cadastro>> GetClientes()
         {
-            return Ok(cadastrosCliente);
+            return Ok(_repositoryCadastro.GetClientes());
         }
 
         // GET
         [HttpGet("/cliente/{cpf}/consulta")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Cadastro> Consulta(string cpf)
+        public ActionResult<Cadastro> GetClienteCpf(string cpf)
         {
-            var cadastro = cadastrosCliente.Find(cadastrosCliente => cadastrosCliente.Cpf == cpf);
+            var cadastro = _repositoryCadastro.GetClienteCpf(cpf);
             if (cadastro == null)
             {
                 return NotFound();
@@ -55,10 +64,13 @@ namespace WEBAPI.Aula01.Controllers
         [HttpPost("/cliente/inserção")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Cadastro> Inserir(Cadastro clienteNovo)
+        public ActionResult<Cadastro> InsertCliente(Cadastro clienteNovo)
         {
-            cadastrosCliente.Add(clienteNovo);
-            return CreatedAtAction(nameof(Inserir), clienteNovo);
+            if (!_repositoryCadastro.InsertCliente(clienteNovo))
+            {
+                return BadRequest();
+            }
+            return CreatedAtAction(nameof(InsertCliente), clienteNovo);
         }
 
         // PUT
@@ -66,31 +78,25 @@ namespace WEBAPI.Aula01.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Cadastro> Atualizar(string cpf, Cadastro novoCadastro)
+        public IActionResult UpdateCliente(string cpf, Cadastro novoCadastro)
         {
-            var cadastro = cadastrosCliente.Find(cadastrosCliente => cadastrosCliente.Cpf == cpf);
-            if (cadastro == null)
+            if (!_repositoryCadastro.UpdateCliente(cpf, novoCadastro))
             {
                 return NotFound();
             }
-            cadastro.Nome = novoCadastro.Nome;
-            cadastro.Cpf = novoCadastro.Cpf;
-            cadastro.DataNascimento = novoCadastro.DataNascimento;
-            return Ok(cadastrosCliente.Find(cadastrosCliente => cadastrosCliente.Cpf == novoCadastro.Cpf));
+            return NoContent();
         }
 
         // DELETE
         [HttpDelete("/cliente/{cpf}/remoção")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Deletar(string cpf)
+        public IActionResult DeleteCliente(string cpf)
         {
-            var cadastro = cadastrosCliente.Find(cadastrosCliente => cadastrosCliente.Cpf == cpf);
-            if (cadastro == null)
+            if (!_repositoryCadastro.DeleteCliente(cpf))
             {
                 return NotFound();
             }
-            cadastrosCliente.Remove(cadastro);
             return NoContent();
         }
     }
