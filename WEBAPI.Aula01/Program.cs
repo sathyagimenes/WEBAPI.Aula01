@@ -1,3 +1,7 @@
+using WEBAPI.Aula01.Core.Interface;
+using WEBAPI.Aula01.Core.Services;
+using WEBAPI.Aula01.Infra.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<ICadastroService, CadastroService>();
+builder.Services.AddScoped<ICadastroRepository, CadastroRepository>();
 
 var app = builder.Build();
 

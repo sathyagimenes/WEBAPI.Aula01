@@ -1,9 +1,12 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using WEBAPI.Aula01.Core;
+using WEBAPI.Aula01.Core.Interface;
 
-namespace WEBAPI.Aula01.Repository
+namespace WEBAPI.Aula01.Infra.Repository
 {
-    public class CadastroRepository
+    public class CadastroRepository : ICadastroRepository
     {
         private readonly IConfiguration _configuration;
 
