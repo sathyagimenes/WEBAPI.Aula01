@@ -62,12 +62,10 @@ namespace WEBAPI.Aula01.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [TypeFilter(typeof(RegistrationValidationActionFilter))]
         public IActionResult UpdateCliente(string cpf, Cadastro novoCadastro)
         {
-            if (!_cadastroService.UpdateCliente(cpf, novoCadastro))
-            {
-                return NotFound();
-            }
+            _cadastroService.UpdateCliente(cpf, novoCadastro);
             return NoContent();
         }
 
