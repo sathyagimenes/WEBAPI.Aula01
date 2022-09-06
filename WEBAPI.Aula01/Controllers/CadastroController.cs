@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WEBAPI.Aula01.Core;
 using WEBAPI.Aula01.Core.Interface;
+using WEBAPI.Aula01.Filters;
 
 namespace WEBAPI.Aula01.Controllers
 {
@@ -8,6 +9,7 @@ namespace WEBAPI.Aula01.Controllers
     [ApiController]
     [Consumes("application/json")]
     [Produces("application/json")]
+    [TypeFilter(typeof(LogActionFilter))]
     public class CadastroController : ControllerBase
     {
         public List<Cadastro> cadastrosCliente { get; set; }
@@ -31,6 +33,7 @@ namespace WEBAPI.Aula01.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[TypeFilter(typeof(LogActionFilter))]
         public ActionResult<Cadastro> GetClienteCpf(string cpf)
         {
             var cadastro = _cadastroService.GetClienteCpf(cpf);
