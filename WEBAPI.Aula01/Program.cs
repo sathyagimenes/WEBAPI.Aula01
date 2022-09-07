@@ -12,6 +12,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add<GeneralExceptionFilter>();
+}
+);
+
 builder.Services.AddScoped<ICadastroService, CadastroService>();
 builder.Services.AddScoped<ICadastroRepository, CadastroRepository>();
 builder.Services.AddScoped<CpfValidationActionFilter>();
