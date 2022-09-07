@@ -32,4 +32,4 @@ Caso não seja nenhum erro: retorne status 500 e a mensagem: "Erro inesperado. T
         "DefaultConnection": "Server=vps40251.publiccloud.com.br;Database=base854; User Id=turma854; Password= <Digite a senha aqui> ; Encrypt=False"
         }
 ```
-Execute o projeto com `CTRL + F5`
+- Execute o projeto com `CTRL + F5`
