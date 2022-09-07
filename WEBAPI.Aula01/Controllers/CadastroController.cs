@@ -33,7 +33,6 @@ namespace WEBAPI.Aula01.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[TypeFilter(typeof(LogActionFilter))]
         public ActionResult<Cadastro> GetClienteCpf(string cpf)
         {
             var cadastro = _cadastroService.GetClienteCpf(cpf);
@@ -46,23 +45,22 @@ namespace WEBAPI.Aula01.Controllers
 
         // POST
         [HttpPost("/cliente/inserção")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ServiceFilter(typeof(CpfValidationActionFilter))]
         public ActionResult<Cadastro> InsertCliente(Cadastro clienteNovo)
         {
-            if (!_cadastroService.InsertCliente(clienteNovo))
-            {
-                return BadRequest();
-            }
+            _cadastroService.InsertCliente(clienteNovo);
             return CreatedAtAction(nameof(InsertCliente), clienteNovo);
         }
 
         // PUT
         [HttpPut("/cliente/{cpf}/atualização")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [TypeFilter(typeof(RegistrationValidationActionFilter))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ServiceFilter(typeof(RegistrationValidationActionFilter))]
         public IActionResult UpdateCliente(string cpf, Cadastro novoCadastro)
         {
             _cadastroService.UpdateCliente(cpf, novoCadastro);
