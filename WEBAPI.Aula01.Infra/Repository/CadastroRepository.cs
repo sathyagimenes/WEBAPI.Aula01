@@ -26,17 +26,26 @@ namespace WEBAPI.Aula01.Infra.Repository
 
         public bool InsertCliente(Cadastro cadastroCli)
         {
-            var query = "INSERT INTO Clientes VALUES (@cpf, @nome, @dataNascimento, @idade)";
+            var query = "INSERT INTO Clientes VALUES (@cpf, @nome, @dataNascimento, @idade, @permissao)";
 
             var parameters = new DynamicParameters();
             parameters.Add("cpf", cadastroCli.Cpf);
             parameters.Add("nome", cadastroCli.Nome);
             parameters.Add("dataNascimento", cadastroCli.DataNascimento);
+            parameters.Add("dataNascimento", cadastroCli.DataNascimento);
             parameters.Add("idade", cadastroCli.Idade);
+            parameters.Add("permissao", cadastroCli.Permissao);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
+                return false;
+            }
         }
 
         public bool DeleteCliente(string cpf)
@@ -46,18 +55,25 @@ namespace WEBAPI.Aula01.Infra.Repository
             var parameters = new DynamicParameters();
             parameters.Add("cpf", cpf);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
+                return false;
+            }
         }
-
         public bool UpdateCliente(string cpf, Cadastro cadastroCli)
         {
             var query = @"UPDATE Clientes SET 
                         cpf = @novoCpf,
                         nome = @nome,
                         dataNascimento = @dataNascimento,
-                        idade = @idade
+                        idade = @idade,
+                        permissao = @permissao
                         WHERE cpf = @cpf";
 
             var parameters = new DynamicParameters();
@@ -66,10 +82,18 @@ namespace WEBAPI.Aula01.Infra.Repository
             parameters.Add("dataNascimento", cadastroCli.DataNascimento);
             parameters.Add("idade", cadastroCli.Idade);
             parameters.Add("cpf", cpf);
+            parameters.Add("permissao", cadastroCli.Permissao);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
+                return false;
+            }
         }
         public Cadastro GetClienteCpf(string cpf)
         {
@@ -80,7 +104,6 @@ namespace WEBAPI.Aula01.Infra.Repository
             });
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
             return conn.QueryFirstOrDefault<Cadastro>(query, parameters);
         }
     }

@@ -4,6 +4,8 @@ namespace WEBAPI.Aula01.Core
 {
     public class Cadastro
     {
+        public long Id { get; set; }
+
         [Required]
         public string? Nome { get; set; }
 
@@ -14,7 +16,30 @@ namespace WEBAPI.Aula01.Core
 
         [Required(ErrorMessage = "Data é obrigatória")]
         public DateTime DataNascimento { get; set; }
-        
-        public int Idade => DateTime.Now.Year - DataNascimento.Year;
+
+        public int Idade { get; private set; }
+
+        [Required]
+        public string Permissao { get; set; }
+
+        public Cadastro(long id, string cpf, string nome, DateTime dataNascimento, int idade, string permissao)
+        {
+            Id = id;
+            Cpf = cpf;
+            Nome = nome;
+            DataNascimento = dataNascimento;
+            Idade = ObterIdade();
+            Permissao = permissao;
+        }
+
+        public int ObterIdade()
+        {
+            int idade = DateTime.Now.Year - DataNascimento.Year;
+            if (DateTime.Now.DayOfYear < DataNascimento.DayOfYear)
+            {
+                idade--;
+            }
+            return idade;
+        }
     }
 }
