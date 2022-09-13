@@ -20,6 +20,7 @@ builder.Services.AddMvc(options =>
 
 builder.Services.AddScoped<ICadastroService, CadastroService>();
 builder.Services.AddScoped<ICadastroRepository, CadastroRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<CpfValidationActionFilter>();
 builder.Services.AddScoped<RegistrationValidationActionFilter>();
 
