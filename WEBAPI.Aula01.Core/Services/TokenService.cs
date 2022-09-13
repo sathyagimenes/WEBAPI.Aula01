@@ -17,7 +17,7 @@ namespace WEBAPI.Aula01.Core.Services
 
         public string GenerateToken(string nome, string permissao)
         {
-            var key = Encoding.ASCII.GetBytes(_configuration.GetSection("MySettings").GetSection("SecretKey").Value);
+            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Issuer = "APIClientes.com",
