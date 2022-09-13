@@ -16,6 +16,8 @@ namespace WEBAPI.Aula01.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult CreateToken(string cpf)
         {
             var client = _cadastroService.GetClienteCpf(cpf);
