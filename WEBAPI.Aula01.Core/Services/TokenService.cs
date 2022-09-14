@@ -21,7 +21,7 @@ namespace WEBAPI.Aula01.Core.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Issuer = "APIClientes.com",
-                Audience = "APIProdutos.com",
+                Audience = "APIEventos.com",
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 Subject = new ClaimsIdentity(new Claim[]
                 {
