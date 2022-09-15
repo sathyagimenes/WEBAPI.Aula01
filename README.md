@@ -24,7 +24,7 @@ Caso não seja nenhum erro: retorne status 500 e a mensagem: "Erro inesperado. T
 <br/>
 
 ## :hammer: Como executar o programa
-- Clone o repositório em uma pasta local: git clone `https://github.com/sathyagimenes/WEBAPI.Aula01.git` <br/>
+- Clone o repositório em uma pasta local: `git clone https://github.com/sathyagimenes/WEBAPI.Aula01.git` <br/>
 - Abra a solução do projeto com o Visual Studio: arquivo `WEBAPI.Aula01.sln` <br/>
 - Abra o arquivo `appsettings.json` e informe a senha para acessar o repositório e a secret key para gerar o token.
 ```
