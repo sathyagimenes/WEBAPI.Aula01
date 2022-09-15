@@ -26,10 +26,11 @@ Caso não seja nenhum erro: retorne status 500 e a mensagem: "Erro inesperado. T
 ## :hammer: Como executar o programa
 - Clone o repositório em uma pasta local: git clone `https://github.com/sathyagimenes/WEBAPI.Aula01.git` <br/>
 - Abra a solução do projeto com o Visual Studio: arquivo `WEBAPI.Aula01.sln` <br/>
-- Abra o arquivo `appsettings.json` e informe a senha para acessar o repositório.
+- Abra o arquivo `appsettings.json` e informe a senha para acessar o repositório e a secret key para gerar o token.
 ```
   "ConnectionStrings": {
         "DefaultConnection": "Server=vps40251.publiccloud.com.br;Database=base854; User Id=turma854; Password= <Digite a senha aqui> ; Encrypt=False"
         }
+    "SecretKey": "<chave secreta>"
 ```
 - Execute o projeto com `CTRL + F5`
